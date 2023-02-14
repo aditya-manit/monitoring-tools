@@ -37,6 +37,9 @@ app.listen(port, () => {
 });
 EOF
 
+# Initialize the project with npm
+npm init -y
+
 # Install the required dependencies
 npm install express diskusage
 
