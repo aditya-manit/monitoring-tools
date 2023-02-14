@@ -23,9 +23,8 @@ app.get('/', (req, res) => {
       console.error(err);
       res.status(500).send('Internal server error');
     } else {
-      const mountPoint = path.parse(info.filesystem).root;
       res.json({
-        mountPoint: mountPoint,
+        mountPoint: "/",
         total: info.total,
         free: info.free,
         used: info.total - info.free,
