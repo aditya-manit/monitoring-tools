@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
       res.status(500).send('Internal server error');
     } else {
       res.json({
+       // hardcoing for "/"
         mountPoint: "/",
         total: info.total,
         free: info.free,
