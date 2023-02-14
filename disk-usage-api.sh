@@ -1,37 +1,39 @@
 #!/bin/bash
 
-# Install Node.js and npm
-sudo apt-get update
-sudo apt-get install -y nodejs npm
-
-# Create a directory for your project
+# Create a new directory for the project and navigate to it
 mkdir disk-usage-api
 cd disk-usage-api
 
-# Create the index.js file with the disk usage function
-cat << EOF > index.js
+# Create a new index.js file with the API code
+cat <<EOF > index.js
+const express = require('express');
 const disk = require('diskusage');
 
-function diskUsage(callback) {
-  disk.check('/', (error, info) => {
-    if (error) {
-      callback(error);
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  disk.check('/', (err, info) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Internal server error');
     } else {
-      const data = {
+      res.json({
         total: info.total,
-        free: info.available,
-        used: info.total - info.available
-      };
-      callback(null, data);
+        free: info.free,
+        used: info.total - info.free,
+      });
     }
   });
-}
+});
 
-module.exports = diskUsage;
+app.listen(port, () => {
+  console.log('API server listening at http://localhost:' + port);
+});
 EOF
 
-# Initialize the project with npm
-npm init -y
+# Install the required dependencies
+npm install express diskusage
 
-# Install the diskusage package
-npm install diskusage
+# Start the server
+node index.js
