@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+# Install Node.js and npm
+sudo apt-get update
+sudo apt-get install -y nodejs npm
+
 # Create a new directory for the project and navigate to it
 mkdir disk-usage-api
 cd disk-usage-api
